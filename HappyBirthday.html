@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to top right, #ffcc00, #66ccff);
+            text-align: center;
+            padding: 30px;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #ff3333;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #ff6600;
+            margin-bottom: 15px;
+        }
+
+        .wish {
+            font-size: 18px;
+            color: #ff6600;
+            margin-bottom: 30px;
+        }
+
+        .wish1 {
+            font-size: 18px;
+            color: #ff6666;
+            margin-bottom: 30px;
+        }
+
+        .button {
+            background-color: #ff9966;
+            color: white;
+            font-size: 16px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background-color: #ff6600;
+        }
+
+        /* Photo Container - Make photos 1 inch by 1 inch */
+        .photo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: auto;
+            margin-top: 30px;
+        }
+
+        .photo-container img {
+            width: 96px; /* Set to 96px for 1 inch */
+            height: 96px; /* Set to 96px for 1 inch */
+            display: none;
+            margin: 10px auto;
+            object-fit: cover; /* Ensure the image covers the box without being stretched */
+            border-radius: 50%; /* Optional: make the images circular */
+        }
+
+        /* Hearts Animation - Filling the entire page */
+        .heart {
+            position: absolute;
+            font-size: 40px; /* Size of the hearts */
+            opacity: 0;
+            animation: heartFill 4s forwards;
+        }
+
+        @keyframes heartFill {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Confetti Animation - Hearts falling */
+        .confetti {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .confetti div {
+            position: absolute;
+            font-size: 30px;
+            animation: confettiFall 5s infinite linear;
+            opacity: 0.8;
+        }
+
+        @keyframes confettiFall {
+            0% { top: -10px; transform: rotate(0deg); }
+            100% { top: 100vh; transform: rotate(360deg); }
+        }
+
+        /* Media Query for smaller screens (like iPhone) */
+        @media (max-width: 600px) {
+            body {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .wish, .wish1 {
+                font-size: 16px;
+            }
+
+            .button {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+
+            .confetti div {
+                font-size: 25px; /* Reduce size of falling hearts */
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>🌷Happy Birthday🌷</h1>
+    <h2>One and Only ThelThelLay💖</h2>
+    <p class="wish">💌Wishing you the happiest of birthdays, filled with love, and all the things that make your heart smile💌</p>
+    <p class="wish1">💓May this year bring you as much happiness and love as you spread to those around you, and may all your dreams bloom into reality💓</p>
+    <p class="wish">❤️I Love You❤️</p>
+    
+    <button class="button" onclick="startCelebration()">💝Click Me💝</button>
+
+    <div class="photo-container">
+		<img id="photo1" src="https://i.imgur.com/Pchz4K9.jpg" alt="Photo 1">
+        <img id="photo2" src="https://i.imgur.com/JaoO84b.jpg" alt="Photo 2">
+        <img id="photo3" src="https://i.imgur.com/PCCqoTC.jpg" alt="Photo 3">
+
+    </div>
+
+    <div class="confetti">
+        <!-- Confetti (heart) elements -->
+        <div style="animation-delay: 0s; left: 10%;">❤️</div>
+        <div style="animation-delay: 1s; left: 20%;">❤️</div>
+        <div style="animation-delay: 2s; left: 30%;">❤️</div>
+        <div style="animation-delay: 3s; left: 40%;">❤️</div>
+        <div style="animation-delay: 4s; left: 50%;">❤️</div>
+        <div style="animation-delay: 5s; left: 60%;">❤️</div>
+        <div style="animation-delay: 6s; left: 70%;">❤️</div>
+    </div>
+
+    <script>
+        let currentPhoto = 0;
+        const photos = document.querySelectorAll('.photo-container img');
+
+        function showNextPhoto() {
+            if (currentPhoto < photos.length) {
+                photos[currentPhoto].style.display = 'block';
+                if (currentPhoto > 0) {
+                    photos[currentPhoto - 1].style.display = 'none';
+                }
+                currentPhoto++;
+            }
+        }
+
+        function startCelebration() {
+            // Show hearts filling the page first
+            createHearts();
+
+            // After the hearts are done, start showing the photos
+            setTimeout(() => {
+                showNextPhoto();
+                setInterval(showNextPhoto, 3000);  // Show next photo every 3 seconds
+            }, 4000); // Wait for hearts animation to finish
+        }
+
+        function createHearts() {
+            const heartCount = 100; // Number of hearts to appear on the page
+            for (let i = 0; i < heartCount; i++) {
+                let heart = document.createElement('div');
+                heart.classList.add('heart');
+                heart.innerHTML = '❤️';
+                heart.style.left = `${Math.random() * 100}%`; // Random horizontal position
+                heart.style.top = `${Math.random() * 100}%`; // Random vertical position
+                document.body.appendChild(heart);
+
+                // Fade out after a moment
+                setTimeout(() => {
+                    heart.style.opacity = 0;
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 1000);
+                }, 3000);
+            }
+        }
+    </script>
+
+</body>
+</html>
